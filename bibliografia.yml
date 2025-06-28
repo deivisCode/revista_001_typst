@@ -1,0 +1,14 @@
+c1909:
+  type: article
+  title: Untersuchungen über die Grundlagen der Thermodynamik
+  author: Carathéodory, C.
+  date: 1909-09
+  page-range: 355-386
+  serial-number:
+    doi: 10.1007/BF01450409
+    issn: 0025-5831, 1432-1807
+  parent:
+    type: periodical
+    title: Mathematische Annalen
+    issue: 3
+    volume: 67
