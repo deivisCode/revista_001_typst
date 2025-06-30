@@ -20,7 +20,11 @@
     size: 70pt,
     weight: "bold",
     align(center)[
-        #text(fill:rgb("#ff0000"))[M]OMENTUM
+        // Ollo, existe un pequeno erro polo que a tipografía de texto normal
+        // usada dentro do modo matemáticas non se ve igual que a mesma
+        // tipografía fora do modo matemáticas. Véxase:
+        // https://github.com/typst/typst/issues/366
+        #text(fill:rgb("#ff0000"))[$arrow("M")$]OMENTUM
     ]
 )
 
@@ -32,22 +36,24 @@
     center,
     dy:-1cm,
     rect(
-        inset:10pt,
+        inset:8pt,
         stroke:1.2pt,
         fill:rgb("#ff0000"),
-        text(stroke:white)[Num. 001 #h(1fr) Abril 2025]
+        text(fill:white,size:17pt)[`Num. 001` #h(1fr) `Abril 2025`]
     )
 )
 
 // Imaxe da portada.
 #place(
     center,
-    rect(
-        inset: 0pt,
-        stroke: 2pt,
-        image(width: 100%, "imaxes/pedra.jpg"),
-    ),
+    image(width: 100%, "imaxes/pedra.jpg"),
 )
+
+// Borde
+// #let thing(body) = context {
+//     let size = measure(body)
+//     [Width of "#body" is #size.width]
+// }
 
 // Comentario da imaxe
 #place(
