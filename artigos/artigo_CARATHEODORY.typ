@@ -1,4 +1,12 @@
-// Ollo, ruta relativa a ESTE documento
+/// Ollo, ruta relativa a ESTE documento.
+//
+// Ollo, fai falla cargar o estilo aquí outra vez. O feito de que o carguemos
+// no arquivo 'principal' revista_001 non afecta aquí.
+//
+// Véxase: https://sitandr.github.io/typst-examples-book/book/basics/must_know/project_struct.html
+// <<Note that modules in Typst can see only what they created themselves or
+// imported. Anything else is invisible for them. That's why you need
+// template.typ file to define all functions within.>>
 #import("../estilo.typ"): *
 
 #Titular(
@@ -14,6 +22,9 @@ NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
 NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
 NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
 
+/// Metemos as cousas nun #columns. É posible facelo máis limpo usando:
+// #show: texto => columns(2, texto), o cal non require meter o texto en
+// parenteses pero é sintaxe algo máis opaca para o iniciado
 #columns(2, gutter:5mm, [
 
 === Introdución

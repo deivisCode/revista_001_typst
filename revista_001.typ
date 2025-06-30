@@ -15,8 +15,8 @@
 // Véxase https://typst.app/docs/reference/styling
 #show: activar_estilo
 
-// 'include' o que fai é executar o código do arquivo que corresponda e móstrao
-// como texto normal, en vez de importar funcións ou variables
+//// 'include' o que fai é executar o código do arquivo que corresponda e
+// móstrao como texto normal, en vez de importar funcións ou variables
 //
 // Pode que seguir o método da version de LaTeX para cargar portada,indice e
 // contraportada non sexa o mellor

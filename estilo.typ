@@ -1,10 +1,20 @@
-// Estilo xeral, véxase
+//// Estilo xeral, véxase
 // https://typst.app/docs/tutorial/making-a-template/
 // https://forum.typst.app/t/how-can-i-create-a-set-of-shared-set-and-show-rules-which-can-be-imported-into-a-theme/1292
-// Pode que sea mellor meter estas cousas noutro ficheiro e importalo, e
+//
+//// Pode que sea mellor meter estas cousas noutro ficheiro e importalo, e
 // separar así 'estilo', como tamaños e tipografías, de 'funcións' e resto de
 // macros. O tema de xerar unha plantilla é moi diferente que en LaTeX
-#let activar_estilo(it) = {
+//
+//// Sintaxes equivalentes para definir funcions:
+// #let f = (name) => "Hello, " + name
+// #let f(name) = "Hello, " + name
+//
+//// Tamén se pode devolver 'contido' con 'activar_estilo(it)= [ ...#it ]'
+//
+//// Podemos meter argumentos predefinidos (it, nome:"davis"). Logo facer
+// activar_estilo.with(nome:"outro nome")
+#let activar_estilo(documento) = {
     // Modificamos os valores do ELEMENTO 'page'
     set page(
         paper: "a4",
@@ -39,16 +49,16 @@
     // As citas textuais esas
     set quote(block: true)
     show quote: set text(style:"italic")
-    // Como mostrar o indice
+    //// Como mostrar o indice
     //
-    //// no OUTLINE, as ENTRADAS ca propiedade NIVEL=1, poñémoslle o texto doutro
+    //// No OUTLINE, as ENTRADAS ca propiedade NIVEL=1, poñémoslle o texto doutro
     // modo
     show outline.entry.where( level: 1): set text(
         fill: red,
         size: 13pt,
         weight: "bold"
     )
-    it
+    documento
 }
 
 // Variables. Non as uso para nada inda pero bueno
