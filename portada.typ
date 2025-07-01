@@ -34,7 +34,7 @@
 // Numero e data
 #place(
     center,
-    dy:-1cm,
+    dy:-0.9cm,
     rect(
         inset:8pt,
         stroke:1.2pt,
@@ -46,7 +46,11 @@
 // Imaxe da portada.
 #place(
     center,
-    image(width: 100%, "imaxes/pedra.jpg"),
+    rect(
+        inset:0.6pt,
+        stroke:1.2pt,
+        image(width: 100%, "imaxes/pedra.jpg")
+    ),
 )
 
 // Borde
