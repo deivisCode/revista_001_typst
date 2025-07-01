@@ -57,6 +57,17 @@
         size: 13pt,
         weight: "bold"
     )
+    // Con 'show' podemos afectar a poucas cousas directamente. Hai que montar
+    // unha parrallada cun contexto
+    show figure.caption: set text(font:"New Computer Modern Sans")
+    // Ver https://forum.typst.app/t/how-to-customize-the-styling-of-caption-supplements/976/6
+    show figure.caption: it => context [
+        #strong[
+            #it.supplement~#it.counter.display() #it.separator
+        ]
+        #it.body
+    ]
+
     documento
 }
 
@@ -120,3 +131,4 @@
         supplement: [#titulo],
     )
 ]
+

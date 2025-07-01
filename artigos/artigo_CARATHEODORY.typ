@@ -117,7 +117,7 @@ sempre restrinxírase a un marco de procesos quasiestáticos.
         "../imaxes/termodinamica.jpeg"
     ),
     // Non atopei forma de poñer esto en SansSerif directamente e.g. \textss
-    caption: emph[ Constantine Carathéodory.]
+    caption: [ Constantine Carathéodory.]
 ) <fig:caratheodory:1>
 
 Unha das primeiras críticas que aparece vén de man de Max Planck, quen sinalara
