@@ -53,8 +53,7 @@
     //
     //// No OUTLINE, as ENTRADAS ca propiedade NIVEL=1, poñémoslle o texto doutro
     // modo
-    show outline.entry.where( level: 1): set text(
-        fill: red,
+    show outline.entry.where(level: 1): set text(
         size: 13pt,
         weight: "bold"
     )
@@ -88,30 +87,36 @@
     // Non se me ocurriu como definir a cor de resale inda, xa o farei. Polo de
     // agora está hardcoded neste macro
     color: "#ff00ff",
-) = {
+) = [
     // Por algún motivo, especificar o estilo de paxina fai que se force un
     // pagebreak. Véxase
     // https://typst.app/docs/guides/page-setup-guide/
-    set page(
+    #set page(
         header: [#estilo] + line(length: 100%),
         footer: line(length: 100%)
     )
-    // TITULO
-    text(
-        size: 20pt,
-        fill: rgb(color),
-        weight: "bold",
-        align(center)[
-            #heading(titulo)
-        ]
+    //// Para poder seleccionar cousas para o indice. Por desgracia, non hai
+    // moitas maneiras de facelo. O truco é meter o titular dentro dunha
+    // figura. Podemos especificar o 'tipo' de figura, e no outline mostrar so
+    // ese tipo de figuras. Non queda moi ben tampouco, teño que himbestigar
+    // algo máis este asunto
+    //
+    //// Outra alternativa sería usando 'query', pero apenas mirei o asunto
+    #figure(
+        [
+            // TITULO
+            #text(
+                size: 20pt,
+                fill: rgb(color),
+                weight: "bold",
+                align(center)[ #heading(titulo) ]
+            )
+            // AUTORÍA
+            #text( size: 14pt, align(center)[#autoria])
+            // SUBTITULO
+            #text( align(center)[#emph(subtitulo)])
+        ],
+        kind:"indice",
+        supplement: [#titulo],
     )
-    // AUTORÍA
-    text(
-        size: 14pt,
-        align(center)[#autoria]
-    )
-    // SUBTITULO
-    text(
-        align(center)[#emph(subtitulo)]
-    )
-}
+]
