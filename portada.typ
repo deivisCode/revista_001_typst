@@ -1,4 +1,14 @@
 #import("estilo.typ"): *
+#set page(
+    paper: "a4",
+    margin: (
+        top    : 5mm,
+        left   : 5mm,
+        right  : 5mm,
+        bottom : 5mm
+    ),
+)
+
 
 //// Tal vez sexa mellor idea meter todo esto en funcións (posiblemente no seu propio ficheiro) e logo cargar a portada chamando a ditas funcións.
 //
@@ -16,53 +26,61 @@
 //// Tamén estaría ben usar as variables tipo #Titulo, #Data, .etc
 
 // O titulo
-#text(
-    size: 70pt,
-    weight: "bold",
+#place(
+    center + top,
+    float: true,
     align(center)[
         // Ollo, existe un pequeno erro polo que a tipografía de texto normal
         // usada dentro do modo matemáticas non se ve igual que a mesma
         // tipografía fora do modo matemáticas. Véxase:
         // https://github.com/typst/typst/issues/366
-        #text(fill:rgb("#ff0000"))[$arrow("M")$]OMENTUM
+        #text(
+            fill: rgb("#ff0000"),
+            size: 70pt,
+            weight: "bold",
+        )[$arrow(#text(weight:"bold")[M])$]
+        #text(
+            size: 70pt,
+            weight: "bold",
+        )[OMENTUM]
     ]
 )
 
-#v(4em)
-
-
 // Numero e data
 #place(
-    center,
-    dy:-0.9cm,
+    top,
+    float: true,
+    // dy: -1cm,
     rect(
-        inset:8pt,
-        stroke:1.2pt,
-        fill:rgb("#ff0000"),
-        text(fill:white,size:17pt)[`Num. 001` #h(1fr) `Abril 2025`]
-    )
+        inset: 14pt,
+        stroke: 2pt,
+        fill: rgb("#ff0000"),
+        text(
+            fill: white,
+            // Por algún motivo non da usado esta tipografía
+            font: "Latin Modern Roman",
+            size: 20pt,
+        )[`Num. 001` #h(1fr) `Abril 2025`],
+    ),
 )
 
 // Imaxe da portada.
 #place(
-    center,
+    top,
+    float: true,
     rect(
         inset:0.6pt,
-        stroke:1.2pt,
+        stroke:2pt,
         image(width: 100%, "imaxes/pedra.jpg")
     ),
 )
 
-// Borde
-// #let thing(body) = context {
-//     let size = measure(body)
-//     [Width of "#body" is #size.width]
-// }
-
 // Comentario da imaxe
 #place(
-    dx: 0.5cm,
-    dy: 18cm,
+    top,
+    float: true,
+    // dx: 0.5cm,
+    // dy: 18cm,
     rect(
         fill: rgb("#44444455"),
         text(fill:white,weight:"bold")[
