@@ -54,7 +54,7 @@
     //// No OUTLINE, as ENTRADAS ca propiedade NIVEL=1, poñémoslle o texto doutro
     // modo
     show outline.entry.where(level: 1): set text(
-        size: 13pt,
+        size: 10pt,
         weight: "bold"
     )
     // Con 'show' podemos afectar a poucas cousas directamente. Hai que montar
