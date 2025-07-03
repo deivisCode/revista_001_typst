@@ -57,10 +57,9 @@
         fill: rgb("#ff0000"),
         text(
             fill: white,
-            // Por algún motivo non da usado esta tipografía
-            font: "Latin Modern Roman",
+            font: "Latin Modern Mono",
             size: 20pt,
-        )[`Num. 001` #h(1fr) `Abril 2025`],
+        )[Num. 001 #h(1fr) Abril 2025],
     ),
 )
 
