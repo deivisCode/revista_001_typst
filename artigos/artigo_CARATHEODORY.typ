@@ -9,23 +9,14 @@
 // template.typ file to define all functions within.>>
 #import("../estilo.typ"): *
 
-#Titular(
+/// :FACER: non sei se esta é a mellor maneira de enfocar esto
+#show: Titular.with(
     titulo: "Carathéodory e a axiomatización da termodinámica",
     subtitulo: "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
     autoria: "O sebas",
     estilo: "divulgacion",
     color: "#ff0000"
 )
-
-NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
-NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
-NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
-NON TEÑO NIN IDEA DE POR QUÉ FORZA UNHA NOVA PÁXINA
-
-/// Metemos as cousas nun #columns. É posible facelo máis limpo usando:
-// #show: texto => columns(2, texto), o cal non require meter o texto en
-// parenteses pero é sintaxe algo máis opaca para o iniciado
-#columns(2, gutter:5mm, [
 
 === Introdución
 
@@ -175,6 +166,3 @@ imposíbel evidenciala dende uns principios matemáticos xerais e primitivos.
     "../bibliografia.yml",
     style : "american-physics-society"
 )
-
-
-]) // <--- aquí cérrase o #columns

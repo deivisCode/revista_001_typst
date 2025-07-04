@@ -14,7 +14,39 @@
 //
 //// Podemos meter argumentos predefinidos (it, nome:"davis"). Logo facer
 // activar_estilo.with(nome:"outro nome")
-#let activar_estilo(documento) = {
+#let activar_estilo(
+    /// :FACER: Non me queda claro se debería meter estos argumentos aquí. Non
+    // permite usar logo cousas como #Titulo en calquera sitio. Debería
+    // remiralo
+    Version                : version(0, 0, 1),
+    Titulo                 : "Momentum",
+    Numero                 : "001",
+    Data                   : "Xaneiro do 1900",
+    ImaxePortada           : "./revistas/001/imaxes/cern.png",
+    ComentarioImaxePortada : "comentario",
+    CorResalte             : "ff0000",
+    CorTextoEnResalte      : "000000",
+    LinkRepositorio        : "guthib.com",
+    WhatsApp               : "link.whatsapp.com",
+    Drive                  : "linkaodrive.com",
+    Correo                 : "correo@correo.com",
+    SobreMomentum          : "Esta é a revista momentum!",
+    Participantes          : "Fulano e Mengano",
+    Despedida              : "Adeus! ",
+    Agradecementos         : "Grazas! ",
+    documento,
+) = {
+
+    // Varias informacions. Poden ser usados para un titulo xenerico, e pa que
+    // o documento teña información nos metadatos
+    set document(
+        title: Titulo,
+        author: ("el Davis","el Internet"),
+        description: "Revista de Física Compostelana",
+        keywords: ("física","divulgación"),
+        date: datetime( year: 1900, month: 10, day: 4)
+    )
+
     // Modificamos os valores do ELEMENTO 'page'
     set page(
         paper: "a4",
@@ -31,7 +63,7 @@
         // Por desgracia, por agora non hai maneira de usar tipografías nun
         // directorio concreto tendo a súa ruta (sí se pode cunha opción do
         // compilador, pero é un rollo)
-        font: "New Computer Modern",
+        font: "Latin Modern Roman",
         lang: "gl",
         ligatures: true,
     )
@@ -43,7 +75,7 @@
     // O texto tipo 'verbatim', non é un ELEMENTO básico de typst, polo que non
     // podemos facer 'set raw' como cos anteriores, hai que facer 'show'
     show raw: set text(
-        font: "FiraCode Nerd Font",
+        font: "Latin Modern Mono",
         ligatures: true,
     )
     // As citas textuais esas
@@ -71,24 +103,6 @@
     documento
 }
 
-// Variables. Non as uso para nada inda pero bueno
-#let Version = version(0, 0, 1)
-#let Titulo = "Momentum"
-#let Numero = "001"
-#let Data = "Xaneiro do 1900"
-#let ImaxePortada = "./revistas/001/imaxes/cern.png"
-#let ComentarioImaxePortada = "comentario"
-#let CorResalte = "ff0000"
-#let CorTextoEnResalte = "000000"
-#let LinkRepositorio = "guthib.com"
-#let WhatsApp = "link.whatsapp.com"
-#let Drive = " linkaodrive.com"
-#let Correo = "correo@correo.com"
-#let SobreMomentum = " Esta é a revista momentum! "
-#let Participantes = " Fulano e Mengano"
-#let Despedida = " Adeus! "
-#let Agradecementos = " Grazas! "
-
 // O Macro titular tipico da nosa revista
 #let Titular(
     titulo    : "Titulo",
@@ -98,13 +112,16 @@
     // Non se me ocurriu como definir a cor de resale inda, xa o farei. Polo de
     // agora está hardcoded neste macro
     color: "#ff00ff",
-) = [
+    /// :FACER: esto está aqui para poder facer '#show: Titular.with(...)' Non
+    // sei se é a mellor maneira
+    artigo
+) = {
     // Por algún motivo, especificar o estilo de paxina fai que se force un
     // pagebreak. Véxase
     // https://typst.app/docs/guides/page-setup-guide/
-    #set page(
+    set page(
         header: [#estilo] + line(length: 100%),
-        footer: line(length: 100%)
+        // footer: line(length: 100%)
     )
     //// Para poder seleccionar cousas para o indice. Por desgracia, non hai
     // moitas maneiras de facelo. O truco é meter o titular dentro dunha
@@ -113,7 +130,7 @@
     // algo máis este asunto
     //
     //// Outra alternativa sería usando 'query', pero apenas mirei o asunto
-    #figure(
+    figure(
         [
             // TITULO
             #text(
@@ -130,5 +147,5 @@
         kind:"indice",
         supplement: [#titulo],
     )
-]
-
+    columns(2, gutter:5mm, artigo)
+}
