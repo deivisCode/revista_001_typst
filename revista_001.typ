@@ -15,6 +15,12 @@
 #include("portada.typ")
 #include("indice.typ")
 
+#include("artigos/artigo_DECANATO.typ")
 #include("artigos/artigo_CARATHEODORY.typ")
+#include("artigos/artigo_ALMORZO.typ")
+#include("artigos/artigo_SKYRMIONS.typ")
+#include("artigos/artigo_ENTREVISTA.typ")
+#include("artigos/artigo_IRMAS.typ")
+#include("artigos/artigo_XEOCENTRISMO.typ")
 
 #include("contraportada.typ")
