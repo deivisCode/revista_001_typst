@@ -1,3 +1,5 @@
+#import("estilo.typ"): *
+
 #set page(
     background: place(
         right + top, rect(
@@ -18,11 +20,15 @@
     grid.cell(
         x:0, y:0,
         rowspan: 2,
-        outline(
-            title: text(size:20pt)[Índice],
-            // Véxase o comentario en 'estilo.typ'
-            target: figure.where(kind: "indice")
-        ),
+        // Un intento de facer o indice a man, usando o estado 'artigos'. Véxase o arquivo estilo.typ
+        {
+            text(weight:"bold",size:20pt)[ Índice #v(0.5cm) ]
+            context {
+                for artigo in artigos.final() [
+                    #artigo \
+                ]
+            }
+        }
     ),
     grid.cell(
         x:2,y:0,
@@ -79,5 +85,6 @@
     )
 
 )
+
 
 #pagebreak()

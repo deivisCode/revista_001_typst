@@ -18,10 +18,12 @@
     /// :FACER: Non me queda claro se debería meter estos argumentos aquí. Non
     // permite usar logo cousas como #Titulo en calquera sitio. Debería
     // remiralo
-    Version                : version(0, 0, 1),
     Titulo                 : "Momentum",
     Numero                 : "001",
-    Data                   : "Xaneiro do 1900",
+    Data                   : "Abril 2025",
+    Dia                    : "5",
+    Mes                    : "Abril",
+    Ano                    : "2025",
     ImaxePortada           : "./revistas/001/imaxes/cern.png",
     ComentarioImaxePortada : "comentario",
     CorResalte             : "ff0000",
@@ -36,7 +38,6 @@
     Agradecementos         : "Grazas! ",
     documento,
 ) = {
-
     // Varias informacions. Poden ser usados para un titulo xenerico, e pa que
     // o documento teña información nos metadatos
     set document(
@@ -81,37 +82,77 @@
     // As citas textuais esas
     set quote(block: true)
     show quote: set text(style:"italic")
-    //// Como mostrar o indice
-    //
-    //// No OUTLINE, as ENTRADAS ca propiedade NIVEL=1, poñémoslle o texto doutro
-    // modo
-    show outline.entry.where(level: 1): set text(
-        size: 10pt,
-        weight: "bold"
-    )
     // Con 'show' podemos afectar a poucas cousas directamente. Hai que montar
     // unha parrallada cun contexto
     show figure.caption: set text(font:"New Computer Modern Sans")
     // Ver https://forum.typst.app/t/how-to-customize-the-styling-of-caption-supplements/976/6
-    show figure.caption: it => context [
-        #strong[
+    show figure.caption: it => context {
+        strong[
             #it.supplement~#it.counter.display() #it.separator
         ]
-        #it.body
-    ]
+        it.body
+    }
 
     documento
 }
 
+/// Aquí unha cousa interesante. Typst usa funcións puras, polo que unha certa
+// función non pode cambiar os valores de varibles fora do seu entorno. Por
+// exemplo, se temos:
+//
+// #let a = 0
+//
+// Logo non podemos facer unha funcion como
+//
+// #let suma2(x) { a = x + 1 }
+//
+// a cal incrementa o valor da variable 'a' Typst é unha linguaxe con funcións
+// puras. En caso de chamar á función 'suma2' consecutivamente, devolvería
+// resultados diferentes, polo que ao meterlle o mesmo argumento a 'suma2', o
+// argumento 'a', obtemos cousas diferentes. Esto en typst non está permitido,
+// e da erro (supuestamente cun bo motivo). O que hai que facer é definir un
+// 'estado':
+//
+// #let a = state("id", 0 )
+//
+// Onde "id" é unha cadena calquera para identificar a variable, e 0 pode ser
+// calquera valor de calquer tipo, o inicial. Non se cambia o valor da
+// variable, ACTUALIZASE o estado, facendo
+//
+// #a.update(self + 2)
+//
+// para sumarlle 2, por exemplo. 'self' é calquera nome. O que faremos agora é
+// crear un estado que iremos actualizando engadíndolle arrays. Esto faise cada
+// vez que chamemos á función "Titular", na cal temos
+//
+// artigos.update(it => it + (Titulo, Autoria),)
+//
+// Ao final, se queremos recuperar o valor do estado, hai que facer
+//
+// #context{ artigos.final() }
+//
+// '#context' úsase porque o valor de artigos.final() necesita ser executado
+// dentro dun contexto (a min non me miredes, buscaque que é un contexto en
+// typst mellor). '.final()' é sinxelo de entender neste caso. Queremos o valor
+// de 'artigos' logo de que se actualizase todas as veces no documento, é
+// dicir, logo de que fose chamado todas as veces pola función "Titular". Imos
+// cargar o valor de 'artigos' ao COMEZO de todo, ANTES de actualizar seu valor
+// ningunha vez, polo que necesitamos .last para que lea todas as
+// actualizacións
+//
+// Un rollo patatero. Inicializo o estado con valor inicial dun array baleiro.
+// Logo no índice obteño os valores con artigos.last() dentro dun contexto
+#let artigos = state("artigos", ())
+
 // O Macro titular tipico da nosa revista
 #let Titular(
-    titulo    : "Titulo",
-    subtitulo : "Subtitulo",
-    autoria   : "Autoría",
-    estilo    : "estilo",
+    Titulo    : "Titulo",
+    Subtitulo : "Subtitulo",
+    Autoria   : "Autoría",
+    Estilo    : "estilo",
     // Non se me ocurriu como definir a cor de resale inda, xa o farei. Polo de
     // agora está hardcoded neste macro
-    color: "#ff00ff",
+    Color: "#ff00ff",
     /// :FACER: esto está aqui para poder facer '#show: Titular.with(...)' Non
     // sei se é a mellor maneira
     artigo
@@ -120,32 +161,27 @@
     // pagebreak. Véxase
     // https://typst.app/docs/guides/page-setup-guide/
     set page(
-        header: [#estilo] + line(length: 100%),
-        // footer: line(length: 100%)
+        header: [#Estilo] + line(length: 100%),
     )
-    //// Para poder seleccionar cousas para o indice. Por desgracia, non hai
-    // moitas maneiras de facelo. O truco é meter o titular dentro dunha
-    // figura. Podemos especificar o 'tipo' de figura, e no outline mostrar so
-    // ese tipo de figuras. Non queda moi ben tampouco, teño que himbestigar
-    // algo máis este asunto
-    //
-    //// Outra alternativa sería usando 'query', pero apenas mirei o asunto
-    figure(
-        [
-            // TITULO
-            #text(
-                size: 20pt,
-                fill: rgb(color),
-                weight: "bold",
-                align(center)[ #heading(titulo) ]
-            )
-            // AUTORÍA
-            #text( size: 14pt, align(center)[#autoria])
-            // SUBTITULO
-            #text( align(center)[#emph(subtitulo)])
-        ],
-        kind:"indice",
-        supplement: [#titulo],
-    )
+    /// Como comentei antes no dos estados, necesito actualizar o valor de
+    // 'artigos' manualmente. Engádolle un array co titulo do artigo presente
+    // e súa autoría
+    artigos.update(eu => eu + (Titulo, Autoria),)
+    // E mostro o propio titular
+    [
+        // TITULO
+        #text(
+            size: 20pt,
+            fill: rgb(Color),
+            weight: "bold",
+            align(center)[ #heading(Titulo) ]
+        )
+        // AUTORÍA
+        #text( size: 14pt, align(center)[#Autoria])
+        // SUBTITULO
+        #text( align(center)[#emph(Subtitulo)])
+        // <paco>
+        // #link(<paco>)[here]
+    ]
     columns(2, gutter:5mm, artigo)
 }

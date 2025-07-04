@@ -11,11 +11,11 @@
 
 /// :FACER: non sei se esta é a mellor maneira de enfocar esto
 #show: Titular.with(
-    titulo: "Carathéodory e a axiomatización da termodinámica",
-    subtitulo: "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
-    autoria: "O sebas",
-    estilo: "divulgacion",
-    color: "#ff0000"
+    Titulo: "Carathéodory e a axiomatización da termodinámica",
+    Subtitulo: "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
+    Autoria: "O sebas",
+    Estilo: "divulgacion",
+    Color: "#ff0000"
 )
 
 === Introdución
