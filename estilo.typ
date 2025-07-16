@@ -18,14 +18,8 @@
     /// :FACER: Non me queda claro se debería meter estos argumentos aquí. Non
     // permite usar logo cousas como #Titulo en calquera sitio. Debería
     // remiralo
-    Titulo                 : "Momentum",
-    Numero                 : "001",
-    Data                   : "Abril 2025",
-    Dia                    : "5",
-    Mes                    : "Abril",
-    Ano                    : "2025",
-    ImaxePortada           : "./revistas/001/imaxes/cern.png",
-    ComentarioImaxePortada : "comentario",
+    Numero                 : "000",
+    Data                   : datetime.today(),
     CorResalte             : "ff0000",
     CorTextoEnResalte      : "000000",
     LinkRepositorio        : "guthib.com",
@@ -39,60 +33,58 @@
     indice                 : none,
     portada                : none,
     contraportada          : none,
-    documento,
+    documento, // este é un argumento posicional. É o contido de TODO o documento
 ) = {
     // Varias informacions. Poden ser usados para un titulo xenerico, e pa que
     // o documento teña información nos metadatos
     set document(
-        title: Titulo,
-        author: ("el Davis","el Internet"),
-        description: "Revista de Física Compostelana",
-        keywords: ("física","divulgación"),
-        date: datetime( year: 1900, month: 10, day: 4)
+        title       : Titulo,
+        author      : Participantes,
+        description : "Revista de Física Estudantil e Compostelana",
+        keywords    : ("física","divulgación"),
+        date        : Data
     )
 
     // Modificamos os valores do ELEMENTO 'page'
     set page(
         paper: "a4",
         margin: (
-            top: 20mm,
-            left: 10mm,
-            right: 10mm,
-            bottom: 25mm
+            top    : 20mm,
+            left   : 10mm,
+            right  : 10mm,
+            bottom : 25mm
         ),
     )
     // Modificamos os valores do ELEMENTO 'text'
     set text(
         size: 10pt,
-        // Por desgracia, por agora non hai maneira de usar tipografías nun
-        // directorio concreto tendo a súa ruta (sí se pode cunha opción do
-        // compilador, pero é un rollo)
-        font: "Latin Modern Roman",
-        lang: "gl",
-        ligatures: true,
+        font: "Latin Modern Roman", // Por desgracia, por agora non hai maneira de usar tipografías
+        lang: "gl",                 // nun directorio concreto tendo a súa ruta (sí se pode cunha
+        ligatures: true,            // opción do compilador, pero é un rollo)
     )
     // Modificamos os valores do ELEMENTO 'par'
-    set par(
-        justify: true
-        // first-line-indent: 5mm,
-    )
+    set par( justify: true, first-line-indent: 5mm)
     // O texto tipo 'verbatim', non é un ELEMENTO básico de typst, polo que non
-    // podemos facer 'set raw' como cos anteriores, hai que facer 'show'
+    // podemos facer 'set raw' como cos anteriores, hai que facer 'show'. En
+    // realidade, o tema de set/show é algo confuso ao principio, deixo un
+    // comentario de Reddit:
+    // https://www.reddit.com/r/typst/comments/18ycvqz/letsetshow_confusion/
     show raw: set text(
         font: "Latin Modern Mono",
         ligatures: true,
     )
     // As citas textuais esas
-    set quote(block: true)
-    show quote: set text(style:"italic")
+    show quote: it => {
+        set quote(block: true)
+        set text(style:"italic")
+        it
+    }
     // Con 'show' podemos afectar a poucas cousas directamente. Hai que montar
     // unha parrallada cun contexto
-    show figure.caption: set text(font:"New Computer Modern Sans")
     // Ver https://forum.typst.app/t/how-to-customize-the-styling-of-caption-supplements/976/6
     show figure.caption: it => context {
-        strong[
-            #it.supplement~#it.counter.display() #it.separator
-        ]
+        set text(font:"New Computer Modern Sans")
+        strong[ #it.supplement~#it.counter.display() #it.separator ]
         it.body
     }
 
@@ -188,9 +180,7 @@
     // Por algún motivo, especificar o estilo de paxina fai que se force un
     // pagebreak. Véxase
     // https://typst.app/docs/guides/page-setup-guide/
-    set page(
-        header: [#Estilo] + line(length: 100%),
-    )
+    set page( header: [#Estilo] + line(length: 100%))
     /// Como comentei antes no dos estados, necesito actualizar o valor de
     // 'artigos' manualmente. Engádolle un array co titulo do artigo presente
     // e súa autoría
@@ -214,17 +204,9 @@
     columns(2, gutter:5mm, artigo)
 }
 
-#let crear_portada() = {
+#let crear_portada(imaxe, comentario) = {
 
-    set page(
-        paper: "a4",
-        margin: (
-            top    : 5mm,
-            left   : 5mm,
-            right  : 5mm,
-            bottom : 5mm
-        ),
-    )
+    set page( paper: "a4", margin: ( top : 5mm, left : 5mm, right : 5mm, bottom : 5mm),)
 
     //// Non me acaba de quedar claro as diferentes formas de colocar as cousas,
     // con place,move,box etc. Nin qué é a opción de 'float'
@@ -256,7 +238,6 @@
     place(
         top,
         float: true,
-        // dy: -1cm,
         rect(
             inset: 14pt,
             stroke: 2pt,
@@ -270,45 +251,23 @@
     )
 
     // Imaxe da portada.
-    place(
-        top,
-        float: true,
-        rect(
-            inset:0.6pt,
-            stroke:2pt,
-            image(width: 100%, "imaxes/pedra.jpg")
-        ),
-    )
+    place( top, float: true, rect( inset:0.6pt, stroke:2pt, image(width: 100%, imaxe)),)
 
     // Comentario da imaxe
     place(
         top,
         float: true,
-        // dx: 0.5cm,
-        // dy: 18cm,
         rect(
             fill: rgb("#44444455"),
-            text(fill:white,weight:"bold")[
-                1981: Primeira pedra da facultade de física
-            ]
+            text(fill:white,weight:"bold")[#comentario]
         )
     )
-
     pagebreak()
-
 }
 
-#let crear_indice() = {
+#let crear_indice(participantes, sobremomentum) = {
 
-    set page(
-        background: place(
-            right + top, rect(
-                fill: red,
-                height: 100%,
-                width: 8cm,
-            )
-        )
-    )
+    set page( background: place( right + top, rect( fill: red, height: 100%, width: 8cm)))
 
     grid(
         /// Unha estructura con 3 columnas. A primeira para o indice, a segunda
@@ -340,67 +299,19 @@
                 Número 001
             ]
         ),
-        grid.cell(
-            x:2, y:1,
-            align: left,
-            text(fill:white)[
-                #text(size:15pt)[*Dirección*]
-
-                Álvaro Pallas Otero      \
-                Sebastián Táboas Pazo    \
-                Celia Álvarez Álvarez    \
-                Daniel Vázquez Lago      \
-
-                #text(size:15pt)[*Edición*]
-
-                David Cotelo Varela      \
-                Víctor Díaz Díaz         \
-                Daniel Vázquez Lago      \
-                Manuel Vázquez Carreira  \
-                Ana Díaz Caride          \
-                Cristóbal Santos Sánchez \
-                Mauro Garrido Rodríguez  \
-
-                #text(size:15pt)[*Deseño de Logo*]
-
-                Ana Díaz Caride          \
-            ]
-        ),
-        grid.cell(
-            x:0, y:2,
-            [
-                #text(fill:red,size:20pt,weight:"bold")[Sobre Momentum]
-                #v(1cm)
-                Tras uns cantos meses de traballo, por fin podemos dar saída á nova revista
-                estudantil _Momentum_, unha revista que busca ser un medio de comunicación
-                tanto dentro coma fóra da facultade de física onde expor os intereses
-                científicos do estudantado. Cuestións de Divulgación, Actualidade, Entrevistas,
-                Historia, Filosofía da Ciencia, Opinión, Programación... Son todos temas que
-                teñen cabida dentro deste proxecto. Esta revista está realizada integramente
-                polo estudantado da Facultade de Física USC, onde pretendemos ter un recuncho
-                de expresión máis aló do estrictamente académico. Fundada no ano
-                2025 co obxectivo de persistir na historia, esforzámonos sempre en
-                mellorar. Non dubidedes en deixar a vosa pegada!
-            ]
-        )
-
+        grid.cell( x:2, y:1, align: left, text(fill:white)[#participantes]),
+        grid.cell( x:0, y:2, sobremomentum )
     )
-
-
     pagebreak()
-
-
 }
 
 #let crear_contraportada() = {
-
     pagebreak()
     set page(
         background: place(
             center,
             dy:10em,
-            image( "imaxes/botafumeiro.png")
+            image("imaxes/fondo_contraportada.png")
         )
     )
-
 }
