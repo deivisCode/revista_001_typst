@@ -391,3 +391,16 @@
 
 
 }
+
+#let crear_contraportada() = {
+
+    pagebreak()
+    set page(
+        background: place(
+            center,
+            dy:10em,
+            image( "imaxes/botafumeiro.png")
+        )
+    )
+
+}

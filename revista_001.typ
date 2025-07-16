@@ -6,7 +6,8 @@
 #show: activar_estilo.with(
     Titulo: "Momentum",
     portada: crear_portada(),
-    indice: crear_indice()
+    indice: crear_indice(),
+    contraportada: crear_contraportada()
 )
 
 //// 'include' o que fai é executar o código do arquivo que corresponda e
