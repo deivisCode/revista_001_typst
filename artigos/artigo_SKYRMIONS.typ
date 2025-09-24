@@ -4,7 +4,7 @@
     Titulo: "Skyrmións, ou que é a física",
     Subtitulo: "O que unha teoría errada da interacción forte nos recorda sobre como funciona a ciencia.",
     Autoria: "Víctor Díaz Díaz",
-    Estilo: "divulgacion",
+    Estilo: "DIVULGACION",
     Color: "#ff0000"
 )
 

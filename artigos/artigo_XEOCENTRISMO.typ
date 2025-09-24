@@ -4,7 +4,7 @@
     Titulo: "A morte do xeocentrismo: dos gregos a Kepler",
     Subtitulo: "Unha pequena historia do modelo xeocentrista, dos seus defensores e detractores, dende os seus inicios gregos ata o seu ocaso na Idade Media.",
     Autoria: "Santiago González Gómez",
-    Estilo: "historia",
+    Estilo: "HISTORIA",
     Color: "#ff0000"
 )
 

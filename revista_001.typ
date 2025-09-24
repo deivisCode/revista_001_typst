@@ -17,12 +17,17 @@
 ]
 
 #let Participantes = [
+
+    #set par(first-line-indent: 0pt)
     #text(size:15pt)[*Dirección*]
+
     Álvaro Pallas Otero      \
     Sebastián Táboas Pazo    \
     Celia Álvarez Álvarez    \
     Daniel Vázquez Lago      \
+
     #text(size:15pt)[*Edición*]
+
     David Cotelo Varela      \
     Víctor Díaz Díaz         \
     Daniel Vázquez Lago      \
@@ -30,7 +35,9 @@
     Ana Díaz Caride          \
     Cristóbal Santos Sánchez \
     Mauro Garrido Rodríguez  \
+
     #text(size:15pt)[*Deseño de Logo*]
+
     Ana Díaz Caride          \
 ]
 
@@ -45,8 +52,8 @@
     Participantes     : ("Fulano", "Mengano"),
     Despedida         : "Adeus! ",
     Agradecementos    : "Grazas! ",
-    portada           : crear_portada("/imaxes/pedra.jpg", "comentario"),
-    indice            : crear_indice(SobreMomentum,Participantes),
+    portada           : crear_portada("001","/imaxes/pedra.jpg", "1981: Primeira pedra da facultade de física"),
+    indice            : crear_indice(Participantes,SobreMomentum),
     contraportada     : crear_contraportada()
 )
 

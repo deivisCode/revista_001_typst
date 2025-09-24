@@ -14,7 +14,7 @@
     Titulo: "Carathéodory e a axiomatización da termodinámica",
     Subtitulo: "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
     Autoria: "O sebas",
-    Estilo: "divulgacion",
+    Estilo: "DIVULGACION",
     Color: "#ff0000"
 )
 
@@ -71,7 +71,7 @@ autor dun teorema que leva o seu nome: este asegúranos que para toda 1–forma
 non exacta existe un factor integrante que a converte en integrábel. Así,
 afirma, ao retirar a restricción adiabática, que para $macron(d) Q = "dU" –
 macron(d) W$ existe un factor integrante, que é o inverso da temperatura
-absoluta ($1/T$), que converte a $macron(d) Q$ en exacta, este novo diferencial
+absoluta ($1\/T$), que converte a $macron(d) Q$ en exacta, este novo diferencial
 é a entropía $"dS"$. Desta forma, semella sólido enunciar o seguinte axioma:
 
 #quote(attribution: [Carathéodory, 1909 @c1909])[

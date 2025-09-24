@@ -4,7 +4,7 @@
     Titulo: "Física dun bo almorzo: Chulas perfectas e cafés rebeldes",
     Subtitulo: "A física aplicada á cocción e vibracións do café.",
     Autoria: "Ánxel Costas Castro",
-    Estilo: "divulgacion",
+    Estilo: "DIVULGACION",
     Color: "#ff0000"
 )
 

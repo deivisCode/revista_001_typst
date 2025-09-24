@@ -4,7 +4,7 @@
     Titulo: "Física e filosofía: Irmás",
     Subtitulo: "Sobre a física, a filosofía e a carreira",
     Autoria: "Mauro Garrido Rodríguez",
-    Estilo: "filosofia",
+    Estilo: "FILOSOFIA",
     Color: "#ff0000"
 )
 

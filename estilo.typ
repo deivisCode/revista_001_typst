@@ -18,6 +18,7 @@
     /// :FACER: Non me queda claro se debería meter estos argumentos aquí. Non
     // permite usar logo cousas como #Titulo en calquera sitio. Debería
     // remiralo
+    Titulo                 : "titulo",
     Numero                 : "000",
     Data                   : datetime.today(),
     CorResalte             : "ff0000",
@@ -58,19 +59,19 @@
     // Modificamos os valores do ELEMENTO 'text'
     set text(
         size: 10pt,
-        font: "Latin Modern Roman", // Por desgracia, por agora non hai maneira de usar tipografías
+        font: "New Computer Modern",// Por desgracia, por agora non hai maneira de usar tipografías
         lang: "gl",                 // nun directorio concreto tendo a súa ruta (sí se pode cunha
         ligatures: true,            // opción do compilador, pero é un rollo)
     )
     // Modificamos os valores do ELEMENTO 'par'
-    set par( justify: true, first-line-indent: 5mm)
+    set par( justify: true, first-line-indent: 0mm)
     // O texto tipo 'verbatim', non é un ELEMENTO básico de typst, polo que non
     // podemos facer 'set raw' como cos anteriores, hai que facer 'show'. En
     // realidade, o tema de set/show é algo confuso ao principio, deixo un
     // comentario de Reddit:
     // https://www.reddit.com/r/typst/comments/18ycvqz/letsetshow_confusion/
     show raw: set text(
-        font: "Latin Modern Mono",
+        font: "New Computer Modern Mono",
         ligatures: true,
     )
     // As citas textuais esas
@@ -82,9 +83,10 @@
     // Con 'show' podemos afectar a poucas cousas directamente. Hai que montar
     // unha parrallada cun contexto
     // Ver https://forum.typst.app/t/how-to-customize-the-styling-of-caption-supplements/976/6
-    show figure.caption: it => context {
+    show figure.caption: it => {
+        set align(left)
         set text(font:"New Computer Modern Sans")
-        strong[ #it.supplement~#it.counter.display() #it.separator ]
+        { context strong[#it.supplement~#it.counter.display() #it.separator] }
         it.body
     }
 
@@ -180,33 +182,70 @@
     // Por algún motivo, especificar o estilo de paxina fai que se force un
     // pagebreak. Véxase
     // https://typst.app/docs/guides/page-setup-guide/
-    set page( header: [#Estilo] + line(length: 100%))
+    set page(
+        header: grid(
+            columns: (1fr, 2.3cm, 1fr),
+            rows: (1em,1em,1em),
+            row-gutter: 0pt,
+            // stroke: (thickness:0.1pt, dash:"dashed"),
+            align: (left+horizon, center+horizon, right+horizon ),
+
+            grid.cell( x:0,y:0, Estilo),
+
+            grid.cell( x:0,y:1, line(length:100%, stroke:0.2pt)),
+
+            grid.cell( x:2,y:1, line(length:100%, stroke:0.2pt)),
+
+            grid.cell(
+                x:1,
+                rowspan:3,
+                circle(
+                    fill:red,
+                    radius: 1.4em,
+                    text(
+                        fill:white,
+                        size:22pt,
+                        [$accent(m,arrow,size:#155% )$]
+                    )
+                )
+            )
+
+        )
+    )
     /// Como comentei antes no dos estados, necesito actualizar o valor de
     // 'artigos' manualmente. Engádolle un array co titulo do artigo presente
     // e súa autoría
     artigos.update(eu => eu + (Titulo, Autoria),)
     // E mostro o propio titular
-    [
-        // TITULO
-        #text(
-            size: 20pt,
-            fill: rgb(Color),
-            weight: "bold",
-            align(center)[ #heading(Titulo) ]
-        )
-        // AUTORÍA
-        #text( size: 14pt, align(center)[#Autoria])
-        // SUBTITULO
-        #text( align(center)[#emph(Subtitulo)])
-        // <paco>
-        // #link(<paco>)[here]
-    ]
+
+    // TITULO
+    text(
+        size: 20pt,
+        fill: rgb(Color),
+        weight: "bold",
+        align(center)[ #heading(Titulo) ]
+    )
+    // AUTORÍA
+    text( size: 14pt, align(center)[#Autoria])
+    // SUBTITULO
+    text( align(center)[#emph(Subtitulo)])
+    // <paco>
+    // #link(<paco>)[here]
+
     columns(2, gutter:5mm, artigo)
 }
 
-#let crear_portada(imaxe, comentario) = {
+#let crear_portada(numero, imaxe, comentario) = {
 
-    set page( paper: "a4", margin: ( top : 5mm, left : 5mm, right : 5mm, bottom : 5mm),)
+    set page(
+        paper: "a4",
+        margin: (
+            top : 5mm,
+            left : 5mm,
+            right : 5mm,
+            bottom : 5mm
+        ),
+    )
 
     //// Non me acaba de quedar claro as diferentes formas de colocar as cousas,
     // con place,move,box etc. Nin qué é a opción de 'float'
@@ -216,12 +255,8 @@
     // O titulo
     place(
         center + top,
-        float: true,
+        dy:1cm,
         align(center)[
-            // Ollo, existe un pequeno erro polo que a tipografía de texto normal
-            // usada dentro do modo matemáticas non se ve igual que a mesma
-            // tipografía fora do modo matemáticas. Véxase:
-            // https://github.com/typst/typst/issues/366
             #text(
                 fill: rgb("#ff0000"),
                 size: 70pt,
@@ -236,38 +271,54 @@
 
     // Numero e data
     place(
-        top,
-        float: true,
-        rect(
-            inset: 14pt,
+        center + top,
+        dy:4cm,
+        block(
+            inset: 11pt,
             stroke: 2pt,
             fill: rgb("#ff0000"),
             text(
                 fill: white,
-                font: "Latin Modern Mono",
+                font: "New Computer Modern Mono",
                 size: 20pt,
-            )[Num. 001 #h(1fr) Abril 2025],
+            )[Num.#numero #h(1fr) Abril 2025],
         ),
     )
 
     // Imaxe da portada.
-    place( top, float: true, rect( inset:0.6pt, stroke:2pt, image(width: 100%, imaxe)),)
+    place(
+        center + top,
+        dy: 5.21cm,
+        block(
+            inset:0.6pt,
+            stroke:2pt,
+            image(width: 100%, imaxe)
+        )
+    )
 
     // Comentario da imaxe
     place(
-        top,
-        float: true,
+        left + top,
+        dy: 24.3cm,
+        dx: 0.4cm,
         rect(
             fill: rgb("#44444455"),
-            text(fill:white,weight:"bold")[#comentario]
+            text(fill:white,weight:"bold", size:11pt)[#comentario]
         )
     )
+
     pagebreak()
 }
 
 #let crear_indice(participantes, sobremomentum) = {
 
-    set page( background: place( right + top, rect( fill: red, height: 100%, width: 8cm)))
+    set par(first-line-indent: 0pt)
+    set page(
+        background: place(
+            right + top,
+            rect( fill: red, height: 100%, width: 8cm)
+        )
+    )
 
     grid(
         /// Unha estructura con 3 columnas. A primeira para o indice, a segunda
@@ -275,7 +326,8 @@
         // vermello ese do lado.
         columns: (1fr,1.5cm,6.2cm),
         rows: (20%,50%,30%),
-        // stroke: black+1pt,
+        stroke: black+0.1pt,
+
         grid.cell(
             x:0, y:0,
             rowspan: 2,
@@ -289,6 +341,7 @@
                 }
             }
         ),
+
         grid.cell(
             x:2,y:0,
             align: center,
@@ -299,8 +352,15 @@
                 Número 001
             ]
         ),
-        grid.cell( x:2, y:1, align: left, text(fill:white)[#participantes]),
+
+        grid.cell(
+            x:2, y:1,
+            align: left,
+            text(fill:white)[#participantes]
+        ),
+
         grid.cell( x:0, y:2, sobremomentum )
+
     )
     pagebreak()
 }

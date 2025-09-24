@@ -4,7 +4,7 @@
     Titulo: [Benvida a _Momentum_],
     Subtitulo: none,
     Autoria: "Equipo Decanal",
-    Estilo: "profesorado",
+    Estilo: "PROFESORADO",
     Color: "#ff0000"
 )
 
