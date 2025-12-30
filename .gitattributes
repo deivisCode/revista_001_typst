@@ -1,2 +1,2 @@
 *.jpeg filter=lfs diff=lfs merge=lfs -text
-*.otfyazicd filter=lfs diff=lfs merge=lfs -text
+*.otf filter=lfs diff=lfs merge=lfs -text
