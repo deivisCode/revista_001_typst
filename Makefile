@@ -3,6 +3,7 @@ SHELL := bash
 .DEFAULT_GOAL := rula
 
 NOME := revista_001
+f := completa
 
 OPCIONS := \
 	--format pdf              \
@@ -14,7 +15,8 @@ OPCIONS := \
 	--font-path=fontes        \
 	--input rama=$(shell git rev-parse --abbrev-ref HEAD) \
 	--input hash=$(shell git rev-parse --short HEAD) \
-	--input dirt=$(shell test -z "$$(git status --porcelain)" && echo "limpo" || echo "sucio")
+	--input dirt=$(shell test -z "$$(git status --porcelain)" && echo "" || echo "sucio") \
+	--input formato=$(f)
 
 
 

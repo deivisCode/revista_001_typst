@@ -28,7 +28,7 @@
     numero            : "007",
     comentario        : "1981: Primeira pedra da facultade de física",
     imaxe             : "imaxes/pedra.jpg",
-    cor_resalte       : rgb("#ff0000"),
+    cor_resalte       : rgb("#951ed6"),
     cor_texto_resalte : rgb("#ffffff"),
     data              : datetime(day: 1, month: 12, year: 2025),
     participantes     : participantes,

@@ -153,7 +153,7 @@
         background : context {
             place(
                 right + top,
-                rect(fill: _cor_resalte.get(), height: 100%, width: 8cm),
+                rect(fill: _cor_resalte.get().lighten(35%), height: 100%, width: 8cm),
             )
         },
         margin: (
@@ -166,7 +166,11 @@
     show grid.cell: eso => {
         if eso.x == 2 {
             context {
-                set text(font: "New Computer Modern Sans", fill: _cor_texto_resalte.get())
+                set text(
+                    font: "New Computer Modern Sans",
+                    fill: _cor_texto_resalte.get(),
+                )
+                set par(spacing: 0pt)
                 eso
             }
         } else {
@@ -180,17 +184,20 @@
 #let crear_indice(
     numero        : none,
     participantes : none,
+    correo        : none,
+    instagram     : none,
+    repositorio   : none,
     data          : none
 ) = {
     grid(
 
         columns : (1fr, 1.5cm, 6.2cm),
-        rows    : (20%,   60%,   20%),
-        stroke  : (paint: black, thickness: 0.6pt, dash: "loosely-dashed"),
+        rows    : (2cm,   1fr,   auto, auto),
+        // stroke  : 1pt,
 
         grid.cell(
             x:0, y:0,
-            rowspan: 3,
+            rowspan: 4,
             {
                 text(weight:"bold",size:20pt)[ Índice #v(0.5cm) ]
                 context {
@@ -206,9 +213,8 @@
             align: center,
             [
                 #set text( size : 15pt )
-                #v(2em)
-                #data.display("[day padding:none] de [month repr:long] do [year]")
                 #v(1em)
+                #data.display("[day padding:none] de [month repr:long] do [year]") \
                 Número #numero
             ]
         ),
@@ -218,21 +224,21 @@
             align: left,
             {
                 set text( size : 1.2em )
-                text(size: 1.5em)[Dirección]
+                text(size: 1.5em)[*Dirección*]
                 v(1em)
                 participantes // Array de dicionarios ( (nome:"aa", posto:"bb"), (nome:"cc", posto:"dd") )
                     .filter(p => p.posto == "Dirección") // array so con participantes no posto 'Dirección'
                     .map(p => p.nome) // Devolvemos un array só cos nomes
                     .join("\n")
                 v(1em)
-                text(size: 1.5em)[Edición]
+                text(size: 1.5em)[*Edición*]
                 v(1em)
                 participantes
                     .filter(p => p.posto == "Edición")
                     .map(p => p.nome)
                     .join("\n")
                 v(1em)
-                text(size: 1.5em)[Deseño de Logo]
+                text(size: 1.5em)[*Deseño de Logo*]
                 v(1em)
                 participantes
                     .filter(p => p.posto == "Deseño de Logo")
@@ -243,19 +249,56 @@
 
         grid.cell(
             x: 2, y:2,
-            [
-                RAMA #text(font: "Symbols Nerd Font Mono")[] #sys.inputs.at("rama") \
-                HASH #text(font: "Symbols Nerd Font Mono")[] #sys.inputs.at("hash") \
-                DIRT #sys.inputs.at("dirt")
-            ]
+            {
+                set par(spacing: 0pt)
+                grid(
+                    rows: (1.5cm, 1.5cm, 1.5cm),
+                    columns : (100%,),
+                    // stroke : 1pt,
+                    {
+                        h(5pt)
+                        text(size: 20pt, font: "Symbols Nerd Font Mono")[]
+                        v(5pt)
+                        link("mailto:" + correo)[*#correo*]
+                    },
+                    {
+                        h(5pt)
+                        text(size: 20pt, font: "Symbols Nerd Font Mono")[]
+                        v(5pt)
+                        link("https://www.instagram.com/" + instagram)[*#instagram*]
+                    },
+                    {
+                        set text(font: "New Computer Modern Mono")
+                        h(5pt)
+                        text(size: 20pt, font: "Symbols Nerd Font Mono")[]
+                        v(5pt)
+                        link("https://github.com/" + repositorio)[*#repositorio*]
+                        v(5pt)
+                        text(font: "Symbols Nerd Font Mono")[]
+                        sys.inputs.at("rama")
+                        [:]
+                        sys.inputs.at("hash")
+                        h(5pt)
+                        sys.inputs.at("dirt")
+                    }
+                )
+            }
+        ),
+
+        grid.cell(
+            x: 2, y:3,
+            {
+                v(1em)
+                image("imaxes/usc-negativo-escuro.pdf")
+                v(1em)
+            }
         )
-
-
     )
 }
 
 // Estilo para os artigos
 #let estilo_corpo(doc) = {
+    counter(page).update(1)
     set page(
         margin: (
             top    : 20mm,
@@ -263,6 +306,10 @@
             right  : 10mm,
             bottom : 25mm
         ),
+        footer : context {
+            let p = counter(page).get().first()
+            [*#numbering("1",p)*]
+        }
     )
     set par(
         justify           : true,
@@ -293,7 +340,11 @@
 }
 
 // Función para crear a contraportada
-#let crear_contraportada() = {
+#let crear_contraportada(
+    anteriores : none,
+    whatsapp   : none
+) = {
+    import "@preview/tiaoma:0.3.0"
     set page(
         background: place(
             center,
@@ -301,7 +352,67 @@
             image("imaxes/fondo_contraportada.png")
         )
     )
-    [ #v(1em) ]
+    lorem(90)
+    v(1em)
+    lorem(90)
+    v(1em)
+    lorem(90)
+    v(1fr)
+    line(length: 100%)
+    grid(
+        columns       : 3,
+        rows          : 2,
+        column-gutter : 1em,
+        row-gutter    : 1em,
+        // stroke : red,
+
+        grid.cell(
+            x:0, y:0,
+            [Edicións anteriores]
+        ),
+
+        grid.cell(
+            x: 0, y:1,
+            tiaoma.barcode(
+                anteriores,
+                "QRCode",
+                options: (
+                    option-1: 4, // error correction 1-4
+                    option-2: 8, // detalle 1-40
+                    scale: 1.5,
+                ),
+            )
+        ),
+
+        grid.cell(
+            x:1, y:0,
+            [Participa! (WhatsApp)]
+        ),
+
+        grid.cell(
+            x: 1, y:1,
+            tiaoma.barcode(
+                whatsapp,
+                "QRCode",
+                options: (
+                    option-1: 4,
+                    option-2: 8,
+                    scale: 1.5,
+                ),
+            )
+        ),
+
+        grid.cell(
+            x:2, y:0,
+            [Co financiamento de]
+        ),
+
+        grid.cell(
+            x:2, y:1,
+            [Alguén]
+        )
+
+    )
 }
 
 #let crear_revista(
@@ -311,14 +422,16 @@
     cor_texto_resalte : rgb("ffffff"),
     imaxe             : "negro.png",
     comentario        : "-- SEN COMENTARIO --",
-    link_repositorio  : "https://github.com/fisicaUSC/revista",
+    repositorio       : "fisicaUSC/revista",
     whatsapp          : "https://chat.whatsapp.com/E900g1Bq7QT5ZKeuiIpxTk",
-    drive             : "https://www.usc.gal/gl/centro/facultade-fisica/revista-estudantil-momentum",
+    instagram         : "momentum.usc",
+    anteriores        : "https://www.usc.gal/gl/centro/facultade-fisica/revista-estudantil-momentum",
     correo            : "revistafisicausc@gmail.com",
     participantes     : ((nome: "-- SEN PARTICIPANTES --"),),
     despedida         : "-- SEN DESPEDIDA --",
     agradecementos    : "-- SEN AGRADECEMENTO --",
-    artigos           : "-- SEN ARTIGOS --"
+    artigos           : "-- SEN ARTIGOS --",
+    formato           : sys.inputs.formato
 ) = {
 
     // Gardamos o novo valor das cores para poder usalo nos artigos
@@ -331,38 +444,97 @@
         data          : data,
     )
 
-    // Agora, activamos o estilo da portada e mostrámola
-    {
-        show: estilo_portada
-        crear_portada(
-            numero            : numero,
-            imaxe             : imaxe,
-            comentario        : comentario,
-            data              : data.display("[month repr:long] [year]")
-        )
+    // Para a revista completa mostramos todo
+    if formato == "completa" {
+
+        // Agora, activamos o estilo da portada e mostrámola
+        {
+            show: estilo_portada
+            crear_portada(
+                numero     : numero,
+                imaxe      : imaxe,
+                comentario : comentario,
+                data       : data.display("[month repr:long] [year]")
+            )
+        }
+
+        // Activamos o estilo do índice e creámolo
+        {
+            show: estilo_indice
+            crear_indice(
+                participantes : participantes,
+                numero        : numero,
+                correo        : correo,
+                instagram     : instagram,
+                repositorio   : repositorio,
+                data          : data
+            )
+        }
+
+        // Activamos o estilo para os artigos (corpo) e mostrámolos
+        {
+            show: estilo_corpo
+            artigos
+        }
+
+        // Activamos o estilo para a contraportada e creámola
+        {
+            show: estilo_contraportada
+            crear_contraportada(
+                anteriores : anteriores,
+                whatsapp   : whatsapp
+            )
+        }
+
     }
 
-    // Activamos o estilo do índice e creámolo
-    {
-        show: estilo_indice
-        crear_indice(
-            participantes : participantes,
-            numero        : numero,
-            data          : data
-        )
+    // Para a versión simple mostramos so os artigos
+    else if formato == "simple" {
+
+        // Activamos o estilo para os artigos (corpo) e mostrámolos
+        {
+            show: estilo_corpo
+            artigos
+        }
+
     }
 
-    // Activamos o estilo para os artigos (corpo) e mostrámolos
-    {
-        show: estilo_corpo
-        artigos
+    // Para a impresa mostramos todo, con algúns cambios
+    else if formato == "impresa" {
+        {
+            show: estilo_portada
+            crear_portada(
+                numero     : numero,
+                imaxe      : imaxe,
+                comentario : comentario,
+                data       : data.display("[month repr:long] [year]")
+            )
+        }
+        {
+            show: estilo_indice
+            crear_indice(
+                participantes : participantes,
+                numero        : numero,
+                correo        : correo,
+                instagram     : instagram,
+                repositorio   : repositorio,
+                data          : data
+            )
+        }
+        {
+            show: estilo_corpo
+            artigos
+        }
+        {
+            show: estilo_contraportada
+            crear_contraportada(
+                correo   : correo,
+                whatsapp : whatsapp
+            )
+        }
     }
 
-    // Activamos o estilo para a contraportada e creámola
-    {
-        show: estilo_contraportada
-        crear_contraportada()
-    }
+    else { panic("Formato da revista non válido") }
 
 }
 
@@ -383,7 +555,11 @@
             grid.cell(
                 x:0, y:0,
                 context {
-                    set text(fill: _cor_resalte.get(), font: "New Computer Modern Sans", weight: "bold")
+                    set text(
+                        fill   : _cor_resalte.get(),
+                        font   : "New Computer Modern Sans",
+                        weight : "bold",
+                    )
                     estilo
                 }
             ),
