@@ -68,7 +68,9 @@
 }
 
 // Estilo para a portada.
-#let estilo_portada(doc) = {
+#let estilo_portada(
+    doc,
+) = {
     set page(
         margin: (
             top    : 5mm,
@@ -82,12 +84,10 @@
 
 // Función para crear a portada
 #let crear_portada(
-    numero            : none,
-    imaxe             : none,
-    comentario        : none,
-    cor_resalte       : none,
-    cor_texto_resalte : none,
-    data              : none
+    numero     : none,
+    imaxe      : none,
+    comentario : none,
+    data       : none
 ) = {
     // O titulo
     place(
@@ -96,7 +96,7 @@
         align(center)[
             #set text(weight: "bold")
             #show math.equation: set text(weight: "bold")
-            #text( fill: cor_resalte, size: 70pt)[$arrow("M")$]
+            #context { text( fill: _cor_resalte.get(), size: 70pt)[$arrow("M")$] }
             #text( size: 70pt)[OMENTUM]
         ]
     )
@@ -104,16 +104,18 @@
     place(
         center + top,
         dy:4cm,
-        block(
-            inset  : 11pt,
-            stroke : 2pt,
-            fill   : cor_resalte,
-            text(
-                fill : cor_texto_resalte,
-                font : "New Computer Modern Mono",
-                size : 20pt,
-            )[Num.#numero #h(1fr) #data],
-        ),
+        context {
+            block(
+                inset  : 11pt,
+                stroke : 2pt,
+                fill   : _cor_resalte.get(),
+                    text(
+                        fill : _cor_texto_resalte.get(),
+                        font : "New Computer Modern Mono",
+                        size : 20pt,
+                    )[Num.#numero #h(1fr) #data]
+            )
+        }
     )
     // Imaxe da portada.
     place(
@@ -144,16 +146,16 @@
 
 // Estilo para o índice de contidos
 #let estilo_indice(
-    cor_resalte       : none,
-    cor_texto_resalte : none,
     doc,
 ) = {
     set par(first-line-indent: 0pt)
     set page(
-        background : place(
-            right + top,
-            rect(fill: cor_resalte, height: 100%, width: 8cm),
-        ),
+        background : context {
+            place(
+                right + top,
+                rect(fill: _cor_resalte.get(), height: 100%, width: 8cm),
+            )
+        },
         margin: (
             top    : 20mm,
             left   : 10mm,
@@ -163,8 +165,10 @@
     )
     show grid.cell: eso => {
         if eso.x == 2 {
-            set text(font: "New Computer Modern Sans", fill: cor_texto_resalte)
-            eso
+            context {
+                set text(font: "New Computer Modern Sans", fill: _cor_texto_resalte.get())
+                eso
+            }
         } else {
             eso
         }
@@ -181,8 +185,8 @@
     grid(
 
         columns : (1fr, 1.5cm, 6.2cm),
-        rows    : (20%,   50%,   30%),
-        // stroke  : (paint: black, thickness: 0.6pt, dash: "loosely-dashed"),
+        rows    : (20%,   60%,   20%),
+        stroke  : (paint: black, thickness: 0.6pt, dash: "loosely-dashed"),
 
         grid.cell(
             x:0, y:0,
@@ -236,6 +240,16 @@
                     .join("\n")
             }
         ),
+
+        grid.cell(
+            x: 2, y:2,
+            [
+                RAMA #text(font: "Symbols Nerd Font Mono")[] #sys.inputs.at("rama") \
+                HASH #text(font: "Symbols Nerd Font Mono")[] #sys.inputs.at("hash") \
+                DIRT #sys.inputs.at("dirt")
+            ]
+        )
+
 
     )
 }
@@ -323,8 +337,6 @@
         crear_portada(
             numero            : numero,
             imaxe             : imaxe,
-            cor_resalte       : cor_resalte,
-            cor_texto_resalte : cor_texto_resalte,
             comentario        : comentario,
             data              : data.display("[month repr:long] [year]")
         )
@@ -332,10 +344,7 @@
 
     // Activamos o estilo do índice e creámolo
     {
-        show: estilo_indice.with(
-            cor_resalte       : cor_resalte,
-            cor_texto_resalte : cor_texto_resalte,
-        )
+        show: estilo_indice
         crear_indice(
             participantes : participantes,
             numero        : numero,
