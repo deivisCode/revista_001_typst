@@ -1,11 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo: "Física e filosofía: Irmás",
-    Subtitulo: "Sobre a física, a filosofía e a carreira",
-    Autoria: "Mauro Garrido Rodríguez",
-    Estilo: "FILOSOFIA",
-    Color: "#ff0000"
+    Titulo    : "Física e filosofía: Irmás",
+    Subtitulo : "Sobre a física, a filosofía e a carreira",
+    Autoria   : "Mauro Garrido Rodríguez",
+    Estilo    : "FILOSOFIA",
+    Color     : "#ff0000"
 )
 
 Por que a maioría dos que estamos nesta carreira entramos en primeiro lugar?
@@ -58,8 +58,8 @@ que os resolvan, como opinan autores como Lee Smolin ou Sabine Hossenfelder.
 
 #figure(
     image(
-        width: 70%,
-        "../imaxes/BohryEinstein.jpeg"
+        width: 100%,
+        "/imaxes/BohryEinstein.jpeg"
     ),
     caption: [diálogo entre Einstein e Bohr sobre a física cuántica, 1925. Imaxe da wikipedia.]
 )

@@ -1,11 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo: "A morte do xeocentrismo: dos gregos a Kepler",
-    Subtitulo: "Unha pequena historia do modelo xeocentrista, dos seus defensores e detractores, dende os seus inicios gregos ata o seu ocaso na Idade Media.",
-    Autoria: "Santiago González Gómez",
-    Estilo: "HISTORIA",
-    Color: "#ff0000"
+    Titulo    : "A morte do xeocentrismo: dos gregos a Kepler",
+    Subtitulo : "Unha pequena historia do modelo xeocentrista, dos seus defensores e detractores, dende os seus inicios gregos ata o seu ocaso na Idade Media.",
+    Autoria   : "Santiago González Gómez",
+    Estilo    : "HISTORIA",
+    Color     : "#ff0000"
 )
 
 #quote(attribution: [Johannes Kepler])[
@@ -47,8 +47,8 @@ dos astros, que para el debía de ser circular uniforme.
 
 #figure(
     image(
-        width: 60%,
-        "../imaxes/epiciclo.png"
+        width: 100%,
+        "/imaxes/epiciclo.png"
     ),
     caption: [Órbita con epiciclos, que Kepler chamaba "pretzels"]
 )

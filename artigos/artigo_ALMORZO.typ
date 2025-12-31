@@ -1,11 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo: "Física dun bo almorzo: Chulas perfectas e cafés rebeldes",
-    Subtitulo: "A física aplicada á cocción e vibracións do café.",
-    Autoria: "Ánxel Costas Castro",
-    Estilo: "DIVULGACION",
-    Color: "#ff0000"
+    Titulo    : "Física dun bo almorzo: Chulas perfectas e cafés rebeldes",
+    Subtitulo : "A física aplicada á cocción e vibracións do café.",
+    Autoria   : "Ánxel Costas Castro",
+    Estilo    : "DIVULGACION",
+    Color     : "#ff0000"
 )
 
 Meus ben queridos lectores, seguro que para moitos dos que estades lendo este
@@ -52,8 +52,8 @@ temperatura facilmente.
 
 #figure(
     image(
-        width: 70%,
-        "../imaxes/cafeconleche.jpeg"
+        width: 100%,
+        "/imaxes/cafeconleche.jpeg"
     ),
     caption: [ Mancha dun cafe derramado.]
 ) <fig:cafeconleche>

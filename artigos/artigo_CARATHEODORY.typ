@@ -1,21 +1,11 @@
-/// Ollo, ruta relativa a ESTE documento.
-//
-// Ollo, fai falla cargar o estilo aquí outra vez. O feito de que o carguemos
-// no arquivo 'principal' revista_001 non afecta aquí.
-//
-// Véxase: https://sitandr.github.io/typst-examples-book/book/basics/must_know/project_struct.html
-// <<Note that modules in Typst can see only what they created themselves or
-// imported. Anything else is invisible for them. That's why you need
-// template.typ file to define all functions within.>>
 #import("../estilo.typ"): *
 
-/// :FACER: non sei se esta é a mellor maneira de enfocar esto
 #show: Titular.with(
-    Titulo: "Carathéodory e a axiomatización da termodinámica",
-    Subtitulo: "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
-    Autoria: "O sebas",
-    Estilo: "DIVULGACION",
-    Color: "#ff0000"
+    Titulo    : "Carathéodory e a axiomatización da termodinámica",
+    Subtitulo : "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
+    Autoria   : "O sebas",
+    Estilo    : "DIVULGACION",
+    Color     : "#ff0000"
 )
 
 === Introdución
@@ -103,11 +93,9 @@ sempre restrinxírase a un marco de procesos quasiestáticos.
 
 #figure(
     image(
-        width: 45%,
-        // Ollo cas rutas, son relativas a ESTE arquivo
-        "../imaxes/termodinamica.jpeg"
+        width: 100%,
+        "/imaxes/termodinamica.jpeg"
     ),
-    // Non atopei forma de poñer esto en SansSerif directamente e.g. \textss
     caption: [ Constantine Carathéodory.]
 ) <fig:caratheodory:1>
 
@@ -149,20 +137,3 @@ unha formulación axiomática puramente matemática equivalente á clásica
 formulación de Gibbs exclusivamente fenomenolóxica, quizais, a termodinámica
 comporte un caso especial dentro do paradigma científico actual no que é
 imposíbel evidenciala dende uns principios matemáticos xerais e primitivos.
-
-// Mostrar a bibliografía.
-//
-//// Algo curioso é que se especifica qué arquivo usar co mesmo comando co que se
-// mostra a biblio, mentres que en latex seleccionamos o arquivo da
-// bibliografía nun sitio e usamos outro macro para mostrar as referencias
-//
-//// A maiores, a ruta da bibliografía especifícase dende onde está ESTE
-// arquivo.
-//
-//// Tampouco é posible usar bibliografía en varios sitios, polo que distintos
-// artigos non poden ter distintas bibliografías. Véxase
-// https://github.com/typst/typst/issues/1097
-#bibliography(
-    "../bibliografia.yml",
-    style : "american-physics-society"
-)

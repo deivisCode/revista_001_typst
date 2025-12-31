@@ -1,11 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo: "Skyrmións, ou que é a física",
-    Subtitulo: "O que unha teoría errada da interacción forte nos recorda sobre como funciona a ciencia.",
-    Autoria: "Víctor Díaz Díaz",
-    Estilo: "DIVULGACION",
-    Color: "#ff0000"
+    Titulo    : "Skyrmións, ou que é a física",
+    Subtitulo : "O que unha teoría errada da interacción forte nos recorda sobre como funciona a ciencia.",
+    Autoria   : "Víctor Díaz Díaz",
+    Estilo    : "DIVULGACION",
+    Color     : "#ff0000"
 )
 
 === Introdución
@@ -51,8 +51,8 @@ correspondían cos nucleóns. Así naceu o _modelo de Skyrme_.
 
 #figure(
     image(
-        width: 70%,
-        "../imaxes/Skyrmions.jpeg"
+        width: 100%,
+        "/imaxes/Skyrmions.jpeg"
     ),
     caption: [Representación gráfica dun skyrmión,onde o número de buracos se corresponde coa súa carga topolóxica.]
 )

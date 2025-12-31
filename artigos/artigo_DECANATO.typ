@@ -1,11 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo: [Benvida a _Momentum_],
-    Subtitulo: none,
-    Autoria: "Equipo Decanal",
-    Estilo: "PROFESORADO",
-    Color: "#ff0000"
+    Titulo    : [Benvida a _Momentum_],
+    Subtitulo : none,
+    Autoria   : "Equipo Decanal",
+    Estilo    : "PROFESORADO",
+    Color     : "#ff0000"
 )
 
 Dende o Decanato da Facultade saudamos con entusiasmo a iniciativa de abrir un

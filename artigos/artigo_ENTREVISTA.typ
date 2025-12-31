@@ -1,11 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo: "Coñecendo o Observatorio Ramón María Aller",
-    Subtitulo: "Unha conversa sobre o Observatorio e a Astronomía con J.A. Docobo Durántez.",
-    Autoria: "Celia Álvarez Álvarez",
-    Estilo: "ENTREVISTAS",
-    Color: "#ff0000"
+    Titulo    : "Coñecendo o Observatorio Ramón María Aller",
+    Subtitulo : "Unha conversa sobre o Observatorio e a Astronomía con J.A. Docobo Durántez.",
+    Autoria   : "Celia Álvarez Álvarez",
+    Estilo    : "ENTREVISTAS",
+    Color     : "#ff0000"
 )
 
 #strong([P:])
@@ -64,8 +64,8 @@ estado.
 
 #figure(
     image(
-        width:70%,
-        "../imaxes/astronomia.jpeg"
+        width:100%,
+        "/imaxes/astronomia.jpeg"
     ),
     caption: [Ramón María Aller coa súa discípula Antonia Ferrín Moreiras, a primeira muller que presentou en España unha Tese de doutoramento en Astronomía]
 )
