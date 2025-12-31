@@ -5,6 +5,31 @@
 // | |___ ___) || |  | || |__| |_| |%
 // |_____|____/ |_| |___|_____\___/ %
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//
+// Defínense:
+//
+// Funcións que aceptan contido como argumento e lle aplican un estilo:
+//
+//     estilo_xeral()
+//     estilo_portada()
+//     estilo_indice()
+//     estilo_contraportada()
+//     estilo_corpo()
+//
+// Funcións que crean dito contido
+//
+//     crear_portada()
+//     crear_indice()
+//     crear_contraportada()
+//
+// Función que xunta todo
+//
+//     crear_revista()
+
+// Unhas variables globais
+#let _cor_resalte = state("cor_resalte", "#FF0000")
+#let _cor_texto_resalte = state("cor_texto_resalte", "#FF0000")
+#let _artigos = state("artigos", ())
 
 // Estilo xeral que aplica a TODA a revista. Fonte por defecto, algúns
 // metadatos, data, etc.
@@ -57,12 +82,12 @@
 
 // Función para crear a portada
 #let crear_portada(
-    numero      : none,
-    imaxe       : none,
-    comentario  : none,
-    cor         : none,
-    cor_inverso : none,
-    data        : none
+    numero            : none,
+    imaxe             : none,
+    comentario        : none,
+    cor_resalte       : none,
+    cor_texto_resalte : none,
+    data              : none
 ) = {
     // O titulo
     place(
@@ -71,7 +96,7 @@
         align(center)[
             #set text(weight: "bold")
             #show math.equation: set text(weight: "bold")
-            #text( fill: cor, size: 70pt)[$arrow("M")$]
+            #text( fill: cor_resalte, size: 70pt)[$arrow("M")$]
             #text( size: 70pt)[OMENTUM]
         ]
     )
@@ -82,9 +107,9 @@
         block(
             inset  : 11pt,
             stroke : 2pt,
-            fill   : cor,
+            fill   : cor_resalte,
             text(
-                fill : cor_inverso,
+                fill : cor_texto_resalte,
                 font : "New Computer Modern Mono",
                 size : 20pt,
             )[Num.#numero #h(1fr) #data],
@@ -119,15 +144,15 @@
 
 // Estilo para o índice de contidos
 #let estilo_indice(
-    cor         : none,
-    cor_inverso : none,
+    cor_resalte       : none,
+    cor_texto_resalte : none,
     doc,
 ) = {
     set par(first-line-indent: 0pt)
     set page(
         background : place(
             right + top,
-            rect(fill: cor, height: 100%, width: 8cm),
+            rect(fill: cor_resalte, height: 100%, width: 8cm),
         ),
         margin: (
             top    : 20mm,
@@ -138,7 +163,7 @@
     )
     show grid.cell: eso => {
         if eso.x == 2 {
-            set text(font: "New Computer Modern Sans", fill: cor_inverso)
+            set text(font: "New Computer Modern Sans", fill: cor_texto_resalte)
             eso
         } else {
             eso
@@ -148,10 +173,10 @@
 }
 
 // Función para crear o propio índice de contidos
-#let artigos = state("artigos", ())
 #let crear_indice(
+    numero        : none,
     participantes : none,
-    cor_inverso   : none
+    data          : none
 ) = {
     grid(
 
@@ -165,7 +190,7 @@
             {
                 text(weight:"bold",size:20pt)[ Índice #v(0.5cm) ]
                 context {
-                    for artigo in artigos.final() [
+                    for artigo in _artigos.final() [
                         #artigo \
                     ]
                 }
@@ -178,9 +203,9 @@
             [
                 #set text( size : 15pt )
                 #v(2em)
-                5 de Abril do 2025
+                #data.display("[day padding:none] de [month repr:long] do [year]")
                 #v(1em)
-                Número 001
+                Número #numero
             ]
         ),
 
@@ -188,35 +213,34 @@
             x:2, y:1,
             align: left,
             {
-                set text( size : 12pt )
-                for p in participantes {
-                    [#p.nome \ ]
-                }
+                set text( size : 1.2em )
+                text(size: 1.5em)[Dirección]
+                v(1em)
+                participantes // Array de dicionarios ( (nome:"aa", posto:"bb"), (nome:"cc", posto:"dd") )
+                    .filter(p => p.posto == "Dirección") // array so con participantes no posto 'Dirección'
+                    .map(p => p.nome) // Devolvemos un array só cos nomes
+                    .join("\n")
+                v(1em)
+                text(size: 1.5em)[Edición]
+                v(1em)
+                participantes
+                    .filter(p => p.posto == "Edición")
+                    .map(p => p.nome)
+                    .join("\n")
+                v(1em)
+                text(size: 1.5em)[Deseño de Logo]
+                v(1em)
+                participantes
+                    .filter(p => p.posto == "Deseño de Logo")
+                    .map(p => p.nome)
+                    .join("\n")
             }
         ),
 
     )
 }
 
-// Estilo para a contraportada
-#let estilo_contraportada(doc) = {
-    doc
-}
-
-// Función para crear a contraportada
-#let crear_contraportada() = {
-    set page(
-        background: place(
-            center,
-            dy : 10em,
-            image("imaxes/fondo_contraportada.png")
-        )
-    )
-    [ #v(1em) ]
-}
-
-
-
+// Estilo para os artigos
 #let estilo_corpo(doc) = {
     set page(
         margin: (
@@ -249,22 +273,43 @@
     doc
 }
 
+// Estilo para a contraportada
+#let estilo_contraportada(doc) = {
+    doc
+}
+
+// Función para crear a contraportada
+#let crear_contraportada() = {
+    set page(
+        background: place(
+            center,
+            dy : 10em,
+            image("imaxes/fondo_contraportada.png")
+        )
+    )
+    [ #v(1em) ]
+}
+
 #let crear_revista(
-    numero          : "-- SEN NÚMERO --",
-    data            : datetime.today(),
-    cor             : rgb("ff0000"),
-    cor_inverso     : rgb("ffffff"),
-    imaxe           : "negro.png",
-    comentario      : "-- SEN COMENTARIO --",
-    linkrepositorio : "https://github.com/fisicaUSC/revista",
-    whatsapp        : "https://chat.whatsapp.com/E900g1Bq7QT5ZKeuiIpxTk",
-    drive           : "https://www.usc.gal/gl/centro/facultade-fisica/revista-estudantil-momentum",
-    correo          : "revistafisicausc@gmail.com",
-    participantes   : ((nome: "-- SEN PARTICIPANTES --"),),
-    despedida       : "-- SEN DESPEDIDA --",
-    agradecementos  : "-- SEN AGRADECEMENTO --",
-    artigos         : "-- SEN ARTIGOS --"
+    numero            : "-- SEN NÚMERO --",
+    data              : datetime.today(),
+    cor_resalte       : rgb("ff0000"),
+    cor_texto_resalte : rgb("ffffff"),
+    imaxe             : "negro.png",
+    comentario        : "-- SEN COMENTARIO --",
+    link_repositorio  : "https://github.com/fisicaUSC/revista",
+    whatsapp          : "https://chat.whatsapp.com/E900g1Bq7QT5ZKeuiIpxTk",
+    drive             : "https://www.usc.gal/gl/centro/facultade-fisica/revista-estudantil-momentum",
+    correo            : "revistafisicausc@gmail.com",
+    participantes     : ((nome: "-- SEN PARTICIPANTES --"),),
+    despedida         : "-- SEN DESPEDIDA --",
+    agradecementos    : "-- SEN AGRADECEMENTO --",
+    artigos           : "-- SEN ARTIGOS --"
 ) = {
+
+    // Gardamos o novo valor das cores para poder usalo nos artigos
+    _cor_resalte.update(c => cor_resalte)
+    _cor_texto_resalte.update(c => cor_texto_resalte)
 
     // Activamos o estilo xeral, que vai afectar a toda a revista
     show: estilo_xeral.with(
@@ -276,24 +321,25 @@
     {
         show: estilo_portada
         crear_portada(
-            numero      : numero,
-            imaxe       : imaxe,
-            cor         : cor,
-            cor_inverso : cor_inverso,
-            comentario  : comentario,
-            data        : data.display("[month repr:long] [year]")
+            numero            : numero,
+            imaxe             : imaxe,
+            cor_resalte       : cor_resalte,
+            cor_texto_resalte : cor_texto_resalte,
+            comentario        : comentario,
+            data              : data.display("[month repr:long] [year]")
         )
     }
 
     // Activamos o estilo do índice e creámolo
     {
         show: estilo_indice.with(
-            cor         : cor,
-            cor_inverso : cor_inverso,
+            cor_resalte       : cor_resalte,
+            cor_texto_resalte : cor_texto_resalte,
         )
         crear_indice(
             participantes : participantes,
-            cor_inverso   : cor_inverso,
+            numero        : numero,
+            data          : data
         )
     }
 
@@ -313,59 +359,64 @@
 
 
 #let Titular(
-    Titulo    : "Titulo",
-    Subtitulo : "Subtitulo",
-    Autoria   : "Autoría",
-    Estilo    : "estilo",
-    Color     : "#ff00ff",
+    titulo    : "-- SEN TÍTULO --",
+    subtitulo : "-- SEN SUBTITULO --",
+    autoria   : "-- SEN AUTORÍA --",
+    estilo    : "-- SEN ESTILO --",
     artigo
 ) = {
     set page(
         header: grid(
-            columns: (1fr, 2.3cm, 1fr),
-            rows: (1em,1em,1em),
-            row-gutter: 0pt,
-            // stroke: (thickness:0.1pt, dash:"dashed"),
-            align: (left+horizon, center+horizon, right+horizon ),
-
-            grid.cell( x:0,y:0, Estilo),
-
-            grid.cell( x:0,y:1, line(length:100%, stroke:0.2pt)),
-
-            grid.cell( x:2,y:1, line(length:100%, stroke:0.2pt)),
-
+            columns    : (1fr, 2.3cm, 1fr),
+            rows       : (1em,1em,1em),
+            row-gutter : 0pt,
+            align      : (left+horizon, center+horizon, right+horizon ),
+            grid.cell(
+                x:0, y:0,
+                context {
+                    set text(fill: _cor_resalte.get(), font: "New Computer Modern Sans", weight: "bold")
+                    estilo
+                }
+            ),
+            grid.cell(
+                x:0, y:1,
+                line(length:100%, stroke:0.2pt),
+            ),
+            grid.cell(
+                x:2, y:1,
+                line(length:100%, stroke:0.2pt),
+            ),
             grid.cell(
                 x:1,
                 rowspan:3,
-                circle(
-                    fill:red,
-                    radius: 1.4em,
-                    text(
-                        fill:white,
-                        size:22pt,
-                        [$accent(m,arrow,size:#155% )$]
+                context
+                {
+                    circle(
+                        fill   : _cor_resalte.get(),
+                        radius : 1.4em,
+                        text(
+                            fill : _cor_texto_resalte.get(),
+                            size : 22pt,
+                            [$accent(m,arrow)$]
+                        )
                     )
-                )
+                }
             )
-
         )
     )
-
-    artigos.update(eu => eu + (Titulo, Autoria),)
-
+    _artigos.update(eu => eu + (titulo, autoria),)
     // TITULO
-    text(
-        size: 20pt,
-        fill: rgb(Color),
-        weight: "bold",
-        align(center)[ #heading(Titulo) ]
-    )
+    context {
+        text(
+            size   : 20pt,
+            fill   : rgb(_cor_resalte.get()),
+            weight : "bold",
+            align(center)[ #heading(titulo) ]
+        )
+    }
     // AUTORÍA
-    text( size: 14pt, align(center)[#Autoria])
+    text( size: 14pt, align(center)[#autoria])
     // SUBTITULO
-    text( align(center)[#emph(Subtitulo)])
-    // <paco>
-    // #link(<paco>)[here]
-
+    text( align(center)[#emph(subtitulo)])
     columns(2, gutter:5mm, artigo)
 }

@@ -1,11 +1,10 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo    : "Carathéodory e a axiomatización da termodinámica",
-    Subtitulo : "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
-    Autoria   : "O sebas",
-    Estilo    : "DIVULGACION",
-    Color     : "#ff0000"
+    titulo    : "Carathéodory e a axiomatización da termodinámica",
+    subtitulo : "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
+    autoria   : "O sebas",
+    estilo    : "DIVULGACION",
 )
 
 === Introdución

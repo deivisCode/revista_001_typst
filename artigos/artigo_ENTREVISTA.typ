@@ -1,11 +1,10 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo    : "Coñecendo o Observatorio Ramón María Aller",
-    Subtitulo : "Unha conversa sobre o Observatorio e a Astronomía con J.A. Docobo Durántez.",
-    Autoria   : "Celia Álvarez Álvarez",
-    Estilo    : "ENTREVISTAS",
-    Color     : "#ff0000"
+    titulo    : "Coñecendo o Observatorio Ramón María Aller",
+    subtitulo : "Unha conversa sobre o Observatorio e a Astronomía con J.A. Docobo Durántez.",
+    autoria   : "Celia Álvarez Álvarez",
+    estilo    : "ENTREVISTAS",
 )
 
 #strong([P:])

@@ -1,11 +1,10 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo    : "Física dun bo almorzo: Chulas perfectas e cafés rebeldes",
-    Subtitulo : "A física aplicada á cocción e vibracións do café.",
-    Autoria   : "Ánxel Costas Castro",
-    Estilo    : "DIVULGACION",
-    Color     : "#ff0000"
+    titulo    : "Física dun bo almorzo: Chulas perfectas e cafés rebeldes",
+    subtitulo : "A física aplicada á cocción e vibracións do café.",
+    autoria   : "Ánxel Costas Castro",
+    estilo    : "DIVULGACION",
 )
 
 Meus ben queridos lectores, seguro que para moitos dos que estades lendo este

@@ -1,11 +1,10 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    Titulo    : "Física e filosofía: Irmás",
-    Subtitulo : "Sobre a física, a filosofía e a carreira",
-    Autoria   : "Mauro Garrido Rodríguez",
-    Estilo    : "FILOSOFIA",
-    Color     : "#ff0000"
+    titulo    : "Física e filosofía: Irmás",
+    subtitulo : "Sobre a física, a filosofía e a carreira",
+    autoria   : "Mauro Garrido Rodríguez",
+    estilo    : "FILOSOFIA",
 )
 
 Por que a maioría dos que estamos nesta carreira entramos en primeiro lugar?
