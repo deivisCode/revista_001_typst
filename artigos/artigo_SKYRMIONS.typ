@@ -1,7 +1,7 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    titulo    : "Skyrmións, ou que é a física",
+    titulo    : str("Skyrmións, ou que é a física"),
     subtitulo : "O que unha teoría errada da interacción forte nos recorda sobre como funciona a ciencia.",
     autoria   : "Víctor Díaz Díaz",
     estilo    : "DIVULGACION",

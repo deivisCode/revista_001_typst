@@ -1,7 +1,7 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    titulo    : [Benvida a _Momentum_],
+    titulo    : str("Benvida a _Momentum_"),
     subtitulo : none,
     autoria   : "Equipo Decanal",
     estilo    : "PROFESORADO",

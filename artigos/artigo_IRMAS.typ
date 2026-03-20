@@ -1,7 +1,7 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    titulo    : "Física e filosofía: Irmás",
+    titulo    : str("Física e filosofía: Irmás"),
     subtitulo : "Sobre a física, a filosofía e a carreira",
     autoria   : "Mauro Garrido Rodríguez",
     estilo    : "FILOSOFIA",

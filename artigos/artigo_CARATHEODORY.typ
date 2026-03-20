@@ -1,10 +1,11 @@
 #import("../estilo.typ"): *
 
 #show: Titular.with(
-    titulo    : "Carathéodory e a axiomatización da termodinámica",
+    titulo    : str("Carathéodory e a axiomatización da termodinámica"),
     subtitulo : "Sobre a pretensión de transformar un coñecemento puramente fenomenolóxico en puramente matemático.",
     autoria   : "O sebas",
     estilo    : "DIVULGACION",
+    mostrar_rede : true,
 )
 
 === Introdución
@@ -51,7 +52,7 @@ propón é unha reescritura do primeiro principio da termodinámica:
 
 Até aquí non hai nada novidoso, non obstante, debemos pensar que as expresións
 matemáticas que frecuentemente manexamos en termodinámica son diferenciais de
-Pfaff: $"df"=sum x_i "dX"_i$, os cales no caso adiabático ($macron(d) Q = 0$)
+Pfaff: $"df"=sum x_i "dX"_i$, os cales no caso adiabático ($overline(d) Q = 0$)
 supoñen un problema de curvas características entre o estado inicial e o final.
 Nesta clase de procesos, estas 1–formas verifican sempre o segundo lema de
 Schwarz, polo que se trata de diferenciais exactos que podemos integrar; agora

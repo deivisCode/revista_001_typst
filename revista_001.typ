@@ -1,17 +1,17 @@
 #import("estilo.typ"): *
 
 #let participantes = (
-    (nome: "Álvaro Pallas Otero",      posto : "Dirección"),
-    (nome: "Sebastián Táboas Pazo",    posto : "Dirección"),
-    (nome: "Celia Álvarez Álvarez",    posto : "Dirección"),
-    (nome: "Daniel Vázquez Lago",      posto : "Dirección"),
-    (nome: "David Cotelo Varela",      posto : "Edición"),
-    (nome: "Víctor Díaz Díaz",         posto : "Edición"),
-    (nome: "Daniel Vázquez Lago",      posto : "Edición"),
-    (nome: "Manuel Vázquez Carreira",  posto : "Edición"),
-    (nome: "Cristóbal Santos Sánchez", posto : "Edición"),
-    (nome: "Mauro Garrido Rodríguez",  posto : "Edición"),
-    (nome: "Ana Díaz Caride",          posto : "Deseño de Logo"),
+    (nome: "Álvaro Pallas Otero"      , posto : "Dirección"     ),
+    (nome: "Sebastián Táboas Pazo"    , posto : "Dirección"     ),
+    (nome: "Celia Álvarez Álvarez"    , posto : "Dirección"     ),
+    (nome: "Daniel Vázquez Lago"      , posto : "Dirección"     ),
+    (nome: "David Cotelo Varela"      , posto : "Edición"       ),
+    (nome: "Víctor Díaz Díaz"         , posto : "Edición"       ),
+    (nome: "Daniel Vázquez Lago"      , posto : "Edición"       ),
+    (nome: "Manuel Vázquez Carreira"  , posto : "Edición"       ),
+    (nome: "Cristóbal Santos Sánchez" , posto : "Edición"       ),
+    (nome: "Mauro Garrido Rodríguez"  , posto : "Edición"       ),
+    (nome: "Ana Díaz Caride"          , posto : "Deseño de Logo"),
 )
 
 #let artigos = {
@@ -33,4 +33,6 @@
     data              : datetime(day: 1, month: 12, year: 2025),
     participantes     : participantes,
     artigos           : artigos,
+    // mostrar_rede      : false
+    mostrar_rede      : true
 )
